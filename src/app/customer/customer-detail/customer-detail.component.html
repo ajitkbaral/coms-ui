@@ -1,0 +1,36 @@
+<div class="container">
+  <div *ngIf="dataLoaded">
+    <h2>Customer Detail</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <img
+          src="https://randomuser.me/api/portraits/{{ customer.profileImage }}"
+          alt="{{ customer.firstName }}"
+        />
+      </div>
+      <div class="col-md-6">
+        <table class="table table-striped">
+          <tbody>
+            <tr>
+              <td>First Name</td>
+              <td>{{ customer.firstName }}</td>
+            </tr>
+            <tr>
+              <td>Last Name</td>
+              <td>{{ customer.lastName }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <hr />
+    <div>
+      <h4>Map</h4>
+      <app-map [location]="customer.location"></app-map>
+    </div>
+    <hr />
+    <div class="row">
+      <h4>Orders</h4>
+    </div>
+  </div>
+</div>
