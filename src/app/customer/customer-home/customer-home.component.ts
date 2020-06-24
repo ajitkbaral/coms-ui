@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class CustomerHomeComponent implements OnInit {
   customersData: Array<any>;
-  page: Number = 1;
+  page: number = 1;
+  itemsPerPage: number = 4;
 
   constructor(
     private customerService: CustomerService,

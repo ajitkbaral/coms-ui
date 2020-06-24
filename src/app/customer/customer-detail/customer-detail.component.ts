@@ -11,6 +11,7 @@ export class CustomerDetailComponent implements OnInit {
   public dataLoaded: Boolean = false;
   public id: String;
   public customer;
+  public orders;
 
   constructor(
     private customerService: CustomerService,
@@ -27,8 +28,13 @@ export class CustomerDetailComponent implements OnInit {
 
   getCustomerDetail() {
     this.customerService.getById(this.id).subscribe((data) => {
-      this.customer = data;
+      this.customer = data.customer;
+      this.orders = data.orders;
       this.dataLoaded = true;
     });
+  }
+
+  goToNewOrderPage() {
+    this.router.navigate(['orders', 'new']);
   }
 }

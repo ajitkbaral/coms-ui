@@ -1,0 +1,40 @@
+<div class="card mb-4 box-shadow">
+  <img class="card-img-top" [src]="product.productImage" [alt]="product.name" />
+  <div class="card-body">
+    <p class="card-text">
+      {{ product.name }}
+    </p>
+    <div class="d-flex justify-content-between align-items-center">
+      <!-- <div class="input-group">
+        <div class="input-group-prepend">
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            id="button-addon1"
+          >
+            Button
+          </button>
+        </div>
+        <input type="text" class="form-control" placeholder="" />
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button">
+            Button
+          </button>
+        </div>
+      </div> -->
+      <div class="btn-group">
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary"
+          (click)="addToCart($event)"
+        >
+          Add to cart
+        </button>
+        <button type="button" class="btn btn-sm btn-outline-secondary">
+          View
+        </button>
+      </div>
+      <small class="text-muted">NRs. {{ product.price }}</small>
+    </div>
+  </div>
+</div>
