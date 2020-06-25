@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from 'src/app/services/product.service';
 import { Router } from '@angular/router';
-import { CartService } from 'src/app/services/cart.service';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-order-home',
@@ -9,23 +8,17 @@ import { CartService } from 'src/app/services/cart.service';
   styleUrls: ['./order-home.component.scss'],
 })
 export class OrderHomeComponent implements OnInit {
-  public products = [];
-  public cartItems;
+  public orders = [];
 
-  constructor(
-    private productService: ProductService,
-    private router: Router,
-    private cartService: CartService
-  ) {}
+  constructor(private orderService: OrderService, private router: Router) {}
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe((data) => {
-      this.products = data;
+    this.orderService.getAllOrders().subscribe((orders) => {
+      this.orders = orders;
     });
-    this.cartItems = this.cartService.getItems();
   }
 
-  goToCheckoutPage() {
-    this.router.navigate(['orders', 'checkout']);
+  goToOrderPage(id: string): void {
+    this.router.navigate(['orders', 'detail', id]);
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CustomerService } from 'src/app/services/customer.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Customer } from 'src/app/interface/interface';
 
 @Component({
   selector: 'app-customer-detail',
@@ -9,11 +10,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class CustomerDetailComponent implements OnInit {
   public dataLoaded: Boolean = false;
-  public itemsPerPage: number = 10;
-  public page: number = 1;
-
   public id: String;
-  public customer;
+  public customer: Customer;
   public orders;
 
   constructor(

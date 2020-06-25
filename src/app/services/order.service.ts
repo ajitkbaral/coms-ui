@@ -7,20 +7,23 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class OrderService {
+  private orderUrl = environment.baseApiUrl + 'api/orders';
+
   constructor(private http: HttpClient) {}
 
+  getAllOrders(): Observable<any> {
+    return this.http.get<any>(this.orderUrl);
+  }
+
   getOrderById(id: string): Observable<any> {
-    return this.http.get<any>(environment.baseApiUrl + `api/orders/${id}`);
+    return this.http.get<any>(`${this.orderUrl}/${id}`);
   }
 
   placeOrder(orderDetails): Observable<any> {
-    return this.http.post<any>(
-      environment.baseApiUrl + `api/orders`,
-      orderDetails
-    );
+    return this.http.post<any>(this.orderUrl, orderDetails);
   }
 
   deleteOrder(id: string): Observable<any> {
-    return this.http.delete<any>(environment.baseApiUrl + `api/orders/${id}`);
+    return this.http.delete<any>(`${this.orderUrl}/${id}`);
   }
 }

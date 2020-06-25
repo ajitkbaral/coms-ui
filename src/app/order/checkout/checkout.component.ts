@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OrderService } from 'src/app/services/order.service';
 import { CartService } from 'src/app/services/cart.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -20,20 +20,22 @@ export class CheckoutComponent implements OnInit {
     private fb: FormBuilder,
     private orderSerivce: OrderService,
     private cartService: CartService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.getCustomerId();
     this.getCartItems();
     this.buildCheckoutForm();
-    this.getUserLocation();
   }
 
   private buildCheckoutForm(): void {
     this.checkoutForm = this.fb.group({
-      email: [null, [Validators.required, Validators.email]],
-      address: [null, [Validators.required, Validators.minLength(3)]],
+      streetAddress: [null, [Validators.required, Validators.minLength(3)]],
+      city: [null, [Validators.required, Validators.minLength(3)]],
+      state: [null, [Validators.required]],
+      zipCode: [null, [Validators.required, Validators.pattern('^[0-9]{5}$')]],
     });
   }
 
@@ -43,10 +45,18 @@ export class CheckoutComponent implements OnInit {
       products.push(item._id);
     });
     this.orderSerivce
-      .placeOrder({ products, customerId: this.customerId })
+      .placeOrder({
+        products,
+        customerId: this.customerId,
+        streetAddress: this.streetAddress.value,
+        city: this.city.value,
+        state: this.state.value,
+        zipCode: this.zipCode.value,
+        totalAmount: this.cartService.totalPurchaseAmount(),
+      })
       .subscribe(
         (res) => {
-          console.log(res);
+          this.router.navigate(['orders']);
         },
         (err) => {
           console.log(err);
@@ -54,7 +64,7 @@ export class CheckoutComponent implements OnInit {
       );
   }
 
-  getCartItems() {
+  getCartItems(): void {
     this.cartItems = this.cartService.getItems();
   }
 
@@ -64,26 +74,18 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
-  getUserLocation(): void {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        this.latitude = position.coords.latitude;
-        this.longitude = position.coords.longitude;
-      });
-      console.log();
-    } else {
-      console.log('No support for geolocation');
-    }
+  get streetAddress() {
+    return this.checkoutForm.controls.streetAddress;
   }
 
-  get address() {
-    return this.checkoutForm.controls.address;
+  get city() {
+    return this.checkoutForm.controls.city;
   }
 
-  get lastName() {
-    return this.checkoutForm.controls.lastName;
+  get state() {
+    return this.checkoutForm.controls.state;
   }
-  get email() {
-    return this.checkoutForm.controls.email;
+  get zipCode() {
+    return this.checkoutForm.controls.zipCode;
   }
 }

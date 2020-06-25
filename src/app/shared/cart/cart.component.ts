@@ -10,17 +10,10 @@ import { Router } from '@angular/router';
 export class CartComponent implements OnInit {
   public items;
 
-  constructor(private cartService: CartService) {}
+  constructor(public cartService: CartService) {}
 
   ngOnInit(): void {
     this.items = this.cartService.getItems();
   }
 
-  total() {
-    let total = 0;
-    this.items.forEach((item) => {
-      total += item.price * item.quantity;
-    });
-    return total;
-  }
 }
