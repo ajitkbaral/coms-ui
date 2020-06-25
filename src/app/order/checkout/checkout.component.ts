@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OrderService } from 'src/app/services/order.service';
 import { CartService } from 'src/app/services/cart.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -10,35 +11,39 @@ import { CartService } from 'src/app/services/cart.service';
 })
 export class CheckoutComponent implements OnInit {
   public checkoutForm: FormGroup;
+  public cartItems;
   public latitude;
   public longitude;
+  public customerId: number;
 
   constructor(
     private fb: FormBuilder,
     private orderSerivce: OrderService,
-    private cartService: CartService
+    private cartService: CartService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    this.getCustomerId();
+    this.getCartItems();
     this.buildCheckoutForm();
     this.getUserLocation();
   }
 
-  private buildCheckoutForm() {
+  private buildCheckoutForm(): void {
     this.checkoutForm = this.fb.group({
-      firstName: [null, [Validators.required, Validators.minLength(3)]],
-      lastName: [null, [Validators.required, Validators.minLength(3)]],
       email: [null, [Validators.required, Validators.email]],
+      address: [null, [Validators.required, Validators.minLength(3)]],
     });
   }
 
-  public submitCheckoutForm() {
+  public submitCheckoutForm(): void {
     let products = [];
-    this.cartService.getItems().forEach((item) => {
+    this.cartItems.forEach((item) => {
       products.push(item._id);
     });
     this.orderSerivce
-      .placeOrder({ products, customerId: '5ef1d578f7862a4b32c8be07' })
+      .placeOrder({ products, customerId: this.customerId })
       .subscribe(
         (res) => {
           console.log(res);
@@ -47,6 +52,16 @@ export class CheckoutComponent implements OnInit {
           console.log(err);
         }
       );
+  }
+
+  getCartItems() {
+    this.cartItems = this.cartService.getItems();
+  }
+
+  getCustomerId(): void {
+    this.activatedRoute.params.subscribe((params) => {
+      this.customerId = params['id'];
+    });
   }
 
   getUserLocation(): void {
@@ -61,8 +76,8 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  get firstName() {
-    return this.checkoutForm.controls.firstName;
+  get address() {
+    return this.checkoutForm.controls.address;
   }
 
   get lastName() {

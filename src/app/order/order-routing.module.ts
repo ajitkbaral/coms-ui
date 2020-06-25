@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { OrderHomeComponent } from './order-home/order-home.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AddOrderComponent } from './add-order/add-order.component';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
 
 const routes: Routes = [
   {
@@ -10,11 +11,15 @@ const routes: Routes = [
     component: OrderHomeComponent,
   },
   {
-    path: 'new',
+    path: 'new/:id',
     component: AddOrderComponent,
   },
   {
-    path: 'checkout',
+    path: 'detail/:id',
+    component: OrderDetailComponent,
+  },
+  {
+    path: 'checkout/:id',
     component: CheckoutComponent,
   },
 ];

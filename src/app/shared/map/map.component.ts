@@ -9,7 +9,8 @@ import * as L from 'leaflet';
 export class MapComponent implements OnInit {
   private map;
 
-  @Input() location;
+  @Input() latitude;
+  @Input() longitude;
 
   constructor() {}
 
@@ -21,7 +22,7 @@ export class MapComponent implements OnInit {
 
   private buildMap() {
     this.map = L.map('map', {
-      center: this.location.coordinates,
+      center: [this.latitude, this.longitude],
       zoom: 15,
     });
   }
@@ -39,7 +40,7 @@ export class MapComponent implements OnInit {
   }
 
   private addMarkerToMap() {
-    const marker = new L.Marker(this.location.coordinates);
+    const marker = new L.Marker([this.latitude, this.longitude]);
     marker.addTo(this.map);
   }
 }

@@ -9,6 +9,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class CustomerDetailComponent implements OnInit {
   public dataLoaded: Boolean = false;
+  public itemsPerPage: number = 10;
+  public page: number = 1;
+
   public id: String;
   public customer;
   public orders;
@@ -26,7 +29,7 @@ export class CustomerDetailComponent implements OnInit {
     });
   }
 
-  getCustomerDetail() {
+  getCustomerDetail(): void {
     this.customerService.getById(this.id).subscribe((data) => {
       this.customer = data.customer;
       this.orders = data.orders;
@@ -34,7 +37,11 @@ export class CustomerDetailComponent implements OnInit {
     });
   }
 
-  goToNewOrderPage() {
-    this.router.navigate(['orders', 'new']);
+  goToNewOrderPage(): void {
+    this.router.navigate(['orders', 'new', this.customer._id]);
+  }
+
+  goToOrderPage(id: string): void {
+    this.router.navigate(['orders', 'detail', id]);
   }
 }

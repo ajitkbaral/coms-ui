@@ -1,0 +1,48 @@
+<div class="container">
+  <h3>Order details</h3>
+  <div *ngIf="order">
+    <div>
+      <small
+        >Order ID: <b>{{ order._id }}</b></small
+      >
+      <button (click)="deleteOrder()" class="btn btn-sm btn-danger float-right">
+        Delete
+      </button>
+    </div>
+    <div>
+      <small
+        >Date: <b>{{ order.createdAt | date: "dd MMM yyyy" }}</b></small
+      >
+    </div>
+    <hr />
+    <h5 class="mb-3">Ordered Products</h5>
+    <table class="table table-border">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th scope="col">Image</th>
+          <th scope="col">Name</th>
+          <th scope="col">Price</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of order.products; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>
+            <img
+              class="prod-img"
+              [src]="product.productImage"
+              [alt]="product.name"
+            />
+          </td>
+          <td>{{ product.name }}</td>
+          <td>NRs. {{ product.price }}</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+    <hr />
+    <h5 class="mb-3">Customer Details</h5>
+  </div>
+</div>

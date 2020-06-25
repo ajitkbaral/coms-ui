@@ -7,9 +7,10 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AddOrderComponent } from './add-order/add-order.component';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
 
 @NgModule({
-  declarations: [OrderHomeComponent, CheckoutComponent, AddOrderComponent],
+  declarations: [OrderHomeComponent, CheckoutComponent, AddOrderComponent, OrderDetailComponent],
   imports: [
     CommonModule,
     OrderRoutingModule,
