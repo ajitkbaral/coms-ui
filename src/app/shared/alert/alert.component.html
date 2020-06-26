@@ -1,0 +1,7 @@
+<div [ngClass]="getAlertClasses()" role="alert">
+  <strong>{{ alertService.alert.title }}</strong>
+  {{ alertService.alert.message }}
+  <button type="button" class="close" (click)="closeAlert()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>

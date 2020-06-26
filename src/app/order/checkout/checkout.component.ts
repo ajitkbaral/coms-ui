@@ -3,6 +3,8 @@ import { OrderService } from 'src/app/services/order.service';
 import { CartService } from 'src/app/services/cart.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ShippingAddress } from 'src/app/interface/interface';
+import { AlertService } from 'src/app/services/alert.service';
+import { AlertType } from 'src/app/enums/enum';
 
 @Component({
   selector: 'app-checkout',
@@ -17,6 +19,7 @@ export class CheckoutComponent implements OnInit {
     private orderService: OrderService,
     private cartService: CartService,
     private activatedRoute: ActivatedRoute,
+    private alertService: AlertService,
     private router: Router
   ) {}
 
@@ -49,7 +52,12 @@ export class CheckoutComponent implements OnInit {
       })
       .subscribe(
         (res) => {
-          this.router.navigate(['orders']);
+          this.alertService.showAlertDialog({
+            title: 'Success.',
+            message: 'Your order is placed successfully.',
+            type: AlertType.SUCCESS,
+          });
+          this.router.navigate(['orders', 'detail', res._id]);
         },
         (err) => {
           console.log(err);

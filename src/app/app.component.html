@@ -1,2 +1,5 @@
 <app-navbar></app-navbar>
+<div *ngIf="alertService.displayAlert" class="container">
+  <app-alert></app-alert>
+</div>
 <router-outlet></router-outlet>

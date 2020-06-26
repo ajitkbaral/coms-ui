@@ -1,3 +1,5 @@
+import { AlertType } from '../enums/enum';
+
 export interface Location {
   coordinates: Array<Number>;
 }
@@ -17,4 +19,10 @@ export interface ShippingAddress {
   city: string;
   state: string;
   zipCode: number;
+}
+
+export interface Alert {
+  title: string;
+  message: string;
+  type: AlertType;
 }

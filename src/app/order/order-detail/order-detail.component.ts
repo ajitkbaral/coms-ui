@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Customer, ShippingAddress } from 'src/app/interface/interface';
+import { AlertService } from 'src/app/services/alert.service';
+import { AlertType } from 'src/app/enums/enum';
 @Component({
   selector: 'app-order-detail',
   templateUrl: './order-detail.component.html',
@@ -17,7 +19,8 @@ export class OrderDetailComponent implements OnInit {
   constructor(
     private orderSerivce: OrderService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +51,11 @@ export class OrderDetailComponent implements OnInit {
   deleteOrder(): void {
     this.orderSerivce.deleteOrder(this.order._id).subscribe(
       (res) => {
+        this.alertService.showAlertDialog({
+          title: 'Success.',
+          message: 'Order deleted successfully',
+          type: AlertType.SUCCESS,
+        });
         this.router.navigate(['orders']);
       },
       (err) => {
@@ -76,6 +84,11 @@ export class OrderDetailComponent implements OnInit {
       })
       .subscribe(
         (order) => {
+          this.alertService.showAlertDialog({
+            title: 'Update.',
+            message: 'Order updated successfully',
+            type: AlertType.WARNING,
+          });
           this.router.navigate(['orders', 'detail', this.order._id], {
             queryParams: { success: true },
           });

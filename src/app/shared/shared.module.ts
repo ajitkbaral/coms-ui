@@ -8,6 +8,7 @@ import { CartComponent } from './cart/cart.component';
 import { ProfileViewComponent } from './profile-view/profile-view.component';
 import { ShippingFormComponent } from './shipping-form/shipping-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CartComponent,
     ProfileViewComponent,
     ShippingFormComponent,
+    AlertComponent,
   ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   exports: [
@@ -27,6 +29,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CartComponent,
     ProfileViewComponent,
     ShippingFormComponent,
+    AlertComponent,
   ],
 })
 export class SharedModule {}

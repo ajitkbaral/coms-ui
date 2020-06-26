@@ -30,7 +30,11 @@ export class CustomerHomeComponent implements OnInit {
     });
   }
 
-  navigate(id: String) {
+  goToCustomerDetailPage(id: String) {
     this.router.navigate(['/customers/customer-detail', id]);
+  }
+
+  goToAddOrderPage(id: String) {
+    this.router.navigate(['/orders/new', id]);
   }
 }

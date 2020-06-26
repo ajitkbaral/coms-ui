@@ -15,11 +15,6 @@
       >
     </div>
     <hr />
-    <div>
-      <h3>Customer detail</h3>
-      <app-profile-view [customer]="customer"></app-profile-view>
-    </div>
-    <hr />
     <h5 class="mb-3">Ordered Products</h5>
     <table class="table table-border">
       <thead>
@@ -47,6 +42,7 @@
             <button
               class="btn btn-sm btn-danger"
               (click)="deleteProduct(product._id)"
+              [disabled]="order.products.length === 1"
             >
               Remove
             </button>
@@ -63,5 +59,11 @@
         (submitFormEvent)="editOrder($event)"
       ></app-shipping-form>
     </div>
+    <hr />
+    <div class="mb-5">
+      <h3>Customer detail</h3>
+      <app-profile-view [customer]="customer"></app-profile-view>
+    </div>
+    <hr />
   </div>
 </div>

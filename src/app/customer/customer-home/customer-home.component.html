@@ -32,10 +32,16 @@
         <td>{{ customer.location.coordinates[1] }}</td>
         <td>
           <button
-            class="btn btn-sm btn-primary"
-            (click)="navigate(customer._id)"
+            class="btn btn-sm btn-primary mx-1"
+            (click)="goToCustomerDetailPage(customer._id)"
           >
             View
+          </button>
+          <button
+            class="btn btn-sm btn-secondary mx-1"
+            (click)="goToAddOrderPage(customer._id)"
+          >
+            Place order
           </button>
         </td>
       </tr>
