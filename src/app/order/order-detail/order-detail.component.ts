@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Customer, ShippingAddress } from 'src/app/interface/interface';
+import { Customer, ShippingAddress, Order } from 'src/app/interface/interface';
 import { AlertService } from 'src/app/services/alert.service';
 import { AlertType } from 'src/app/enums/enum';
 @Component({
@@ -11,7 +11,7 @@ import { AlertType } from 'src/app/enums/enum';
 })
 export class OrderDetailComponent implements OnInit {
   public shippingAddress: ShippingAddress;
-  order;
+  public order: Order;
   public customer: Customer;
   public itemsPerPage: number = 4;
   public page: number = 1;
@@ -32,14 +32,14 @@ export class OrderDetailComponent implements OnInit {
 
   getOrder(id): void {
     this.orderSerivce.getOrderById(id).subscribe(
-      (order) => {
-        this.order = order;
-        this.customer = order.customer;
+      (orderResponse) => {
+        this.order = orderResponse;
+        this.customer = orderResponse.customer;
         this.shippingAddress = {
-          streetAddress: this.order.streetAddress,
-          city: this.order.city,
-          state: this.order.state,
-          zipCode: this.order.zipCode,
+          streetAddress: orderResponse.streetAddress,
+          city: orderResponse.city,
+          state: orderResponse.state,
+          zipCode: orderResponse.zipCode,
         };
       },
       (err) => {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Order } from '../interface/interface';
 
 @Injectable({
   providedIn: 'root',
@@ -11,23 +12,23 @@ export class OrderService {
 
   constructor(private http: HttpClient) {}
 
-  getAllOrders(): Observable<any> {
-    return this.http.get<any>(this.orderUrl);
+  getAllOrders(): Observable<Array<Order>> {
+    return this.http.get<Array<Order>>(this.orderUrl);
   }
 
   getOrderById(id: string): Observable<any> {
     return this.http.get<any>(`${this.orderUrl}/${id}`);
   }
 
-  updateOrder(id: string, orderDetails): Observable<any> {
-    return this.http.put<any>(`${this.orderUrl}/${id}`, orderDetails);
+  updateOrder(id: string, orderDetails): Observable<Order> {
+    return this.http.put<Order>(`${this.orderUrl}/${id}`, orderDetails);
   }
 
-  placeOrder(orderDetails): Observable<any> {
-    return this.http.post<any>(this.orderUrl, orderDetails);
+  placeOrder(orderDetails): Observable<Order> {
+    return this.http.post<Order>(this.orderUrl, orderDetails);
   }
 
-  deleteOrder(id: string): Observable<any> {
-    return this.http.delete<any>(`${this.orderUrl}/${id}`);
+  deleteOrder(id: string): Observable<Order> {
+    return this.http.delete<Order>(`${this.orderUrl}/${id}`);
   }
 }

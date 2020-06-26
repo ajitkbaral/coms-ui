@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CartService } from 'src/app/services/cart.service';
+import { Product } from 'src/app/interface/interface';
 
 @Component({
   selector: 'app-add-order',
@@ -9,7 +10,7 @@ import { CartService } from 'src/app/services/cart.service';
   styleUrls: ['./add-order.component.scss'],
 })
 export class AddOrderComponent implements OnInit {
-  public products = [];
+  public products: Array<Product> = [];
   public cartItems;
   public customerId: string;
 

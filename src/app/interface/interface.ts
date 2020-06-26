@@ -21,8 +21,25 @@ export interface ShippingAddress {
   zipCode: number;
 }
 
+export interface Product {
+  _id: string;
+  name: string;
+  description: string;
+  productImage: string;
+  price: number;
+}
+
 export interface Alert {
   title: string;
   message: string;
   type: AlertType;
+}
+
+export interface Order {
+  _id: string;
+  products?: Array<Product>;
+  customer?: Customer;
+  shippingAddress?: ShippingAddress;
+  total?: Number;
+  createdAt?: Date;
 }
