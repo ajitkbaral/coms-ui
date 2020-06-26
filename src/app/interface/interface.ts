@@ -11,3 +11,10 @@ export interface Customer {
   profileImage: string;
   location: Location;
 }
+
+export interface ShippingAddress {
+  streetAddress: string;
+  city: string;
+  state: string;
+  zipCode: number;
+}

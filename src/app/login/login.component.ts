@@ -14,9 +14,14 @@ export class LoginComponent implements OnInit {
 
   handleLogin(loginForm): void {
     const { email, password } = loginForm.value;
-    if (email === 'admin@admin.com' && password === 'password') {
-      this.authService.setLoggedIn();
-      this.router.navigate(['customers']);
-    }
+    this.authService.login(email, password).subscribe(
+      (res) => {
+        if (res) {
+          this.authService.setLoggedIn();
+          this.router.navigate(['customers']);
+        }
+      },
+      (err) => console.log(err)
+    );
   }
 }

@@ -17,4 +17,14 @@ export class ProductItemComponent implements OnInit {
     event.stopPropagation();
     this.cartService.addToCart(this.product);
   }
+
+  addedToCart(id: string): boolean {
+    return (
+      this.cartService.getItems().filter((item) => item._id === id).length > 0
+    );
+  }
+
+  removeFromCart(id: string): void {
+    this.cartService.removeFromCart(id);
+  }
 }

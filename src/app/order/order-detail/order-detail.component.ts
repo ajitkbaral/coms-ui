@@ -1,24 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
-import { ActivatedRoute } from '@angular/router';
-import { Customer } from 'src/app/interface/interface';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { Customer, ShippingAddress } from 'src/app/interface/interface';
 @Component({
   selector: 'app-order-detail',
   templateUrl: './order-detail.component.html',
   styleUrls: ['./order-detail.component.scss'],
 })
 export class OrderDetailComponent implements OnInit {
-  public checkoutForm: FormGroup;
+  public shippingAddress: ShippingAddress;
   order;
   public customer: Customer;
   public itemsPerPage: number = 4;
   public page: number = 1;
 
   constructor(
-    private fb: FormBuilder,
     private orderSerivce: OrderService,
+    private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
 
@@ -29,27 +27,17 @@ export class OrderDetailComponent implements OnInit {
     });
   }
 
-  private buildCheckoutForm(): void {
-    this.checkoutForm = this.fb.group({
-      streetAddress: [
-        this.order.streetAddress,
-        [Validators.required, Validators.minLength(3)],
-      ],
-      city: [this.order.city, [Validators.required, Validators.minLength(3)]],
-      state: [this.order.state, [Validators.required]],
-      zipCode: [
-        this.order.zipCode,
-        [Validators.required, Validators.pattern('^[0-9]{5}$')],
-      ],
-    });
-  }
-
   getOrder(id): void {
     this.orderSerivce.getOrderById(id).subscribe(
       (order) => {
         this.order = order;
         this.customer = order.customer;
-        this.buildCheckoutForm();
+        this.shippingAddress = {
+          streetAddress: this.order.streetAddress,
+          city: this.order.city,
+          state: this.order.state,
+          zipCode: this.order.zipCode,
+        };
       },
       (err) => {
         console.log(err);
@@ -59,8 +47,12 @@ export class OrderDetailComponent implements OnInit {
 
   deleteOrder(): void {
     this.orderSerivce.deleteOrder(this.order._id).subscribe(
-      (res) => {},
-      (err) => {}
+      (res) => {
+        this.router.navigate(['orders']);
+      },
+      (err) => {
+        console.log(err);
+      }
     );
   }
 
@@ -76,18 +68,21 @@ export class OrderDetailComponent implements OnInit {
     this.order.products.splice(productIndex, 1);
   }
 
-  get streetAddress() {
-    return this.checkoutForm.controls.streetAddress;
-  }
-
-  get city() {
-    return this.checkoutForm.controls.city;
-  }
-
-  get state() {
-    return this.checkoutForm.controls.state;
-  }
-  get zipCode() {
-    return this.checkoutForm.controls.zipCode;
+  editOrder(addressInfo: ShippingAddress): void {
+    this.orderSerivce
+      .updateOrder(this.order._id, {
+        products: this.order.products,
+        ...addressInfo,
+      })
+      .subscribe(
+        (order) => {
+          this.router.navigate(['orders', 'detail', this.order._id], {
+            queryParams: { success: true },
+          });
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 }

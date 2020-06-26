@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class CartService {
-  items = [];
+  private items = [];
 
   constructor() {}
 
@@ -19,6 +19,18 @@ export class CartService {
       item.quantity = 1;
       this.items.push(item);
     }
+  }
+
+  removeFromCart(id: string) {
+    let itemIndex;
+    this.items.filter((item, index) => {
+      if (item._id === id) {
+        itemIndex = index;
+        return true;
+      }
+      return false;
+    });
+    this.items.splice(itemIndex, 1);
   }
 
   getItems() {

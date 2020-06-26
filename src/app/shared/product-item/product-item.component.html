@@ -5,33 +5,22 @@
       {{ product.name }}
     </p>
     <div class="d-flex justify-content-between align-items-center">
-      <!-- <div class="input-group">
-        <div class="input-group-prepend">
-          <button
-            class="btn btn-outline-secondary"
-            type="button"
-            id="button-addon1"
-          >
-            Button
-          </button>
-        </div>
-        <input type="text" class="form-control" placeholder="" />
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button">
-            Button
-          </button>
-        </div>
-      </div> -->
       <div class="btn-group">
         <button
           type="button"
           class="btn btn-sm btn-outline-secondary"
           (click)="addToCart($event)"
+          *ngIf="!addedToCart(product._id)"
         >
           Add to cart
         </button>
-        <button type="button" class="btn btn-sm btn-outline-secondary">
-          View
+        <button
+          *ngIf="addedToCart(product._id)"
+          type="button"
+          class="btn btn-sm btn-outline-danger"
+          (click)="removeFromCart(product._id)"
+        >
+          Remove
         </button>
       </div>
       <small class="text-muted">NRs. {{ product.price }}</small>

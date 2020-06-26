@@ -57,75 +57,11 @@
     <hr />
     <div class="mb-5">
       <h3>Order Shipping Detail</h3>
-      <form [formGroup]="checkoutForm">
-        <div class="mb-3">
-          <label for="streetAddress">Street Address</label>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Thadodhunga, Dhobighat"
-            formControlName="streetAddress"
-          />
-          <div
-            *ngIf="streetAddress.errors?.required && streetAddress.touched"
-            class="invalid-feedback"
-          >
-            Please enter your shipping address.
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-5 mb-3">
-            <label for="city">City</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Kathmandu"
-              formControlName="city"
-            />
-            <div
-              *ngIf="city.errors?.required && city.touched"
-              class="invalid-feedback"
-            >
-              Please select a valid city.
-            </div>
-          </div>
-          <div class="col-md-4 mb-3">
-            <label for="state">State</label>
-            <select class="custom-select d-block w-100" formControlName="state">
-              <option [ngValue]="null">Choose...</option>
-              <option>State 1</option>
-              <option>State 2</option>
-              <option>State 3</option>
-              <option>State 4</option>
-              <option>State 5</option>
-              <option>State 6</option>
-              <option>State 7</option>
-            </select>
-            <div
-              *ngIf="state.errors?.required && state.touched"
-              class="invalid-feedback"
-            >
-              Please provide a valid state.
-            </div>
-          </div>
-          <div class="col-md-3 mb-3">
-            <label for="zip">Zip Code</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="zipCode"
-              placeholder="44700"
-            />
-            <div
-              *ngIf="zipCode.errors?.required && zipCode.touched"
-              class="invalid-feedback"
-            >
-              Zip code required.
-            </div>
-          </div>
-        </div>
-      </form>
+      <app-shipping-form
+        buttonText="Edit Order"
+        [shippingAddress]="shippingAddress"
+        (submitFormEvent)="editOrder($event)"
+      ></app-shipping-form>
     </div>
   </div>
 </div>

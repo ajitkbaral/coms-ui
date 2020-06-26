@@ -19,6 +19,10 @@ export class OrderService {
     return this.http.get<any>(`${this.orderUrl}/${id}`);
   }
 
+  updateOrder(id: string, orderDetails): Observable<any> {
+    return this.http.put<any>(`${this.orderUrl}/${id}`, orderDetails);
+  }
+
   placeOrder(orderDetails): Observable<any> {
     return this.http.post<any>(this.orderUrl, orderDetails);
   }
